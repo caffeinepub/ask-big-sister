@@ -1,11 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Add optional, built-in soothing background music playback in the app with accessible controls and locally persisted settings.
+**Goal:** Replace the app’s background music with a soft flute track, attempt autoplay on load with graceful handling of browser restrictions, and persist music preferences across reloads.
 
 **Planned changes:**
-- Add a calming audio file to the frontend static assets and play it via the browser audio API (no backend involvement).
-- Add Play/Pause and volume controls to the main app UI (e.g., top navigation) with clear English labels and keyboard/ARIA accessibility.
-- Default music to off/muted until the user starts playback, persist play state and volume locally in the browser, and handle browser autoplay restrictions with a non-blocking user message.
+- Add a flute-based audio file as a static frontend public asset (e.g., under `/assets/audio/`) and update the background music logic to use it instead of the previous default track.
+- On initial app load, attempt to start background music automatically (without requiring the user to open the music UI first).
+- If autoplay is blocked, keep music off and show a clear English message instructing the user to press Play; if autoplay succeeds, ensure the UI reflects the playing state.
+- Persist and restore both volume and play/pause state using the existing `localStorage` key `ask-big-sister-music-prefs`, remaining backward-compatible with previously stored volume-only data.
 
-**User-visible outcome:** Users can start/stop soothing background music and adjust volume; the app remembers their music and volume settings across reloads and won’t auto-play on first visit.
+**User-visible outcome:** The app uses soft flute background music, tries to start it automatically on load, explains how to start it if autoplay is blocked, and remembers the user’s volume and play/pause choice after refresh.

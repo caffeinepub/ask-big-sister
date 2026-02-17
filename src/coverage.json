@@ -1,7 +1,7 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-17T19:15:36.540Z",
+  "generatedAt": "2026-02-17T21:10:03.182Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
@@ -11,33 +11,21 @@
     "implemented": 3,
     "items": [
       {
-        "id": "REQ-7",
-        "summary": "Add a built-in soothing background music track as a static frontend asset and play it in-app using the browser audio API (no backend involvement).",
+        "id": "REQ-10",
+        "summary": "Add a soft flute background music track as a static frontend asset and configure the app to use it for background playback.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/public/assets/audio/soothing-background.mp3",
+          "frontend/public/assets/audio/soft-flute-background.mp3",
           "frontend/src/hooks/useBackgroundMusic.ts"
         ],
         "matchedFiles": [
+          "frontend/public/assets/audio/soft-flute-background.mp3",
           "frontend/src/hooks/useBackgroundMusic.ts"
         ]
       },
       {
-        "id": "REQ-8",
-        "summary": "Provide user controls to start/stop the soothing music and adjust volume, accessible from the main app UI (e.g., in the top navigation bar) with clear English labels.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/layout/NavBar.tsx",
-          "frontend/src/components/layout/AppLayout.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/layout/NavBar.tsx",
-          "frontend/src/components/layout/AppLayout.tsx"
-        ]
-      },
-      {
-        "id": "REQ-9",
-        "summary": "Ensure background music respects user expectations and browser policies by defaulting to muted/off until the user explicitly starts playback, and persist the user’s preference (play state + volume) locally in the browser.",
+        "id": "REQ-11",
+        "summary": "Automatically attempt to start playing the flute background music when the app loads, while handling browser autoplay restrictions gracefully (i.e., if playback is blocked, keep music off and present a clear, English message prompting the user to press Play).",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/hooks/useBackgroundMusic.ts",
@@ -46,17 +34,27 @@
         "matchedFiles": [
           "frontend/src/hooks/useBackgroundMusic.ts",
           "frontend/src/components/layout/NavBar.tsx"
+        ]
+      },
+      {
+        "id": "REQ-12",
+        "summary": "Persist the user’s background music preferences locally so that both volume and play state are restored across page reloads.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useBackgroundMusic.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useBackgroundMusic.ts"
         ]
       }
     ]
   },
   "changedFiles": [
     "build-request.json",
-    "build-template/README.md",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/components/layout/AppLayout.tsx",
+    "frontend/public/assets/audio/soft-flute-background.mp3",
     "frontend/src/components/layout/NavBar.tsx",
     "frontend/src/hooks/useBackgroundMusic.ts",
     "project_state.json",

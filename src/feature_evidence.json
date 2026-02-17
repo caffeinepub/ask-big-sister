@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-add-a-built-in-soothing-background-music-track-as-a-static-frontend-asset-and-play-it-in-app-using-the-browser-audio-api-no-backend-involvement",
-      "featureTitle": "Add a built-in soothing background music track as a static frontend asset and play it in-app using the browser audio API (no backend involvement).",
+      "featureId": "feature-add-a-soft-flute-background-music-track-as-a-static-frontend-asset-and-configure-the-app-to-use-it-for-background-playback",
+      "featureTitle": "Add a soft flute background music track as a static frontend asset and configure the app to use it for background playback.",
       "files": [
         "frontend/src/hooks/useBackgroundMusic.ts"
       ],
@@ -16,33 +16,13 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-7"
+        "REQ-10"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-provide-user-controls-to-start-stop-the-soothing-music-and-adjust-volume-accessible-from-the-main-app-ui-e-g-in-the-top-navigation-bar-with-clear-english-labels",
-      "featureTitle": "Provide user controls to start/stop the soothing music and adjust volume, accessible from the main app UI (e.g., in the top navigation bar) with clear English labels.",
-      "files": [
-        "frontend/src/components/layout/AppLayout.tsx",
-        "frontend/src/components/layout/NavBar.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-8"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-ensure-background-music-respects-user-expectations-and-browser-policies-by-defaulting-to-muted-off-until-the-user-explicitly-starts-playback-and-persist-the-user-s-preference-play-state-volume-locally-in-the-browser",
-      "featureTitle": "Ensure background music respects user expectations and browser policies by defaulting to muted/off until the user explicitly starts playback, and persist the user’s preference (play state + volume) locally in the browser.",
+      "featureId": "feature-automatically-attempt-to-start-playing-the-flute-background-music-when-the-app-loads-while-handling-browser-autoplay-restrictions-gracefully-i-e-if-playback-is-blocked-keep-music-off-and-present-a-clear-english-message-prompting-the-user-to-press-play",
+      "featureTitle": "Automatically attempt to start playing the flute background music when the app loads, while handling browser autoplay restrictions gracefully (i.e., if playback is blocked, keep music off and present a clear, English message prompting the user to press Play).",
       "files": [
         "frontend/src/components/layout/NavBar.tsx",
         "frontend/src/hooks/useBackgroundMusic.ts"
@@ -56,7 +36,26 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-9"
+        "REQ-11"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-persist-the-user-s-background-music-preferences-locally-so-that-both-volume-and-play-state-are-restored-across-page-reloads",
+      "featureTitle": "Persist the user’s background music preferences locally so that both volume and play state are restored across page reloads.",
+      "files": [
+        "frontend/src/hooks/useBackgroundMusic.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-12"
       ],
       "confidence": "high"
     }

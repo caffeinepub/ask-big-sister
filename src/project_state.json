@@ -1,80 +1,32 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 5,
-  "summary": "Build a supportive app for struggling women to ask hard questions and receive empathetic, compassionate “big sister” style advice.",
+  "projectStateVersion": 3,
+  "summary": "New project",
   "architectural_notes": [],
   "known_issues": [],
   "isFixRequest": false,
   "existing_features": [
     {
-      "id": "feature-create-the-core-app-experience-for-ask-big-sister-where-authenticated-users-can-submit-hard-to-ask-questions-and-read-compassionate-big-sister-style-answers",
-      "title": "Create the core app experience for Ask Big Sister where authenticated users can submit hard-to-ask questions and read compassionate, big-sister style answers.",
+      "id": "feature-add-a-soft-flute-background-music-track-as-a-static-frontend-asset-and-configure-the-app-to-use-it-for-background-playback",
+      "title": "Add a soft flute background music track as a static frontend asset and configure the app to use it for background playback.",
       "reqIds": [
-        "REQ-1"
+        "REQ-10"
       ],
       "version": 1
     },
     {
-      "id": "feature-add-an-answering-workflow-so-designated-big-sister-moderators-can-post-empathetic-answers-to-user-questions-from-within-the-app",
-      "title": "Add an answering workflow so designated 'Big Sister' moderators can post empathetic answers to user questions from within the app.",
+      "id": "feature-automatically-attempt-to-start-playing-the-flute-background-music-when-the-app-loads-while-handling-browser-autoplay-restrictions-gracefully-i-e-if-playback-is-blocked-keep-music-off-and-present-a-clear-english-message-prompting-the-user-to-press-play",
+      "title": "Automatically attempt to start playing the flute background music when the app loads, while handling browser autoplay restrictions gracefully (i.e., if playback is blocked, keep music off and present a clear, English message prompting the user to press Play).",
       "reqIds": [
-        "REQ-2"
+        "REQ-11"
       ],
       "version": 1
     },
     {
-      "id": "feature-include-safety-and-privacy-ux-appropriate-for-a-sensitive-advice-app-including-guidance-text-and-an-option-to-post-questions-without-displaying-the-user-s-identity-to-other-users",
-      "title": "Include safety and privacy UX appropriate for a sensitive advice app, including guidance text and an option to post questions without displaying the user’s identity to other users.",
+      "id": "feature-persist-the-user-s-background-music-preferences-locally-so-that-both-volume-and-play-state-are-restored-across-page-reloads",
+      "title": "Persist the user’s background music preferences locally so that both volume and play state are restored across page reloads.",
       "reqIds": [
-        "REQ-3"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-design-a-cohesive-compassionate-visual-theme-for-the-app-colors-typography-layout-and-apply-it-consistently-across-all-screens-without-using-a-blue-purple-primary-palette",
-      "title": "Design a cohesive, compassionate visual theme for the app (colors, typography, layout) and apply it consistently across all screens without using a blue/purple primary palette.",
-      "reqIds": [
-        "REQ-4"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-add-basic-navigation-and-information-architecture-home-recent-questions-ask-submit-a-question-and-about-what-ask-big-sister-is",
-      "title": "Add basic navigation and information architecture: Home (recent questions), Ask (submit a question), and About (what Ask Big Sister is).",
-      "reqIds": [
-        "REQ-5"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-generate-and-include-custom-static-image-assets-logo-a-gentle-hero-illustration-and-render-them-in-the-ui-from-the-frontend-public-assets-folder",
-      "title": "Generate and include custom static image assets (logo + a gentle hero illustration) and render them in the UI from the frontend public assets folder.",
-      "reqIds": [
-        "REQ-6"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-add-a-built-in-soothing-background-music-track-as-a-static-frontend-asset-and-play-it-in-app-using-the-browser-audio-api-no-backend-involvement",
-      "title": "Add a built-in soothing background music track as a static frontend asset and play it in-app using the browser audio API (no backend involvement).",
-      "reqIds": [
-        "REQ-7"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-provide-user-controls-to-start-stop-the-soothing-music-and-adjust-volume-accessible-from-the-main-app-ui-e-g-in-the-top-navigation-bar-with-clear-english-labels",
-      "title": "Provide user controls to start/stop the soothing music and adjust volume, accessible from the main app UI (e.g., in the top navigation bar) with clear English labels.",
-      "reqIds": [
-        "REQ-8"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-ensure-background-music-respects-user-expectations-and-browser-policies-by-defaulting-to-muted-off-until-the-user-explicitly-starts-playback-and-persist-the-user-s-preference-play-state-volume-locally-in-the-browser",
-      "title": "Ensure background music respects user expectations and browser policies by defaulting to muted/off until the user explicitly starts playback, and persist the user’s preference (play state + volume) locally in the browser.",
-      "reqIds": [
-        "REQ-9"
+        "REQ-12"
       ],
       "version": 1
     }
@@ -82,24 +34,17 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Create an app where women can ask hard-to-ask questions and receive empathetic, compassionate big-sister style advice.",
+      "summary": "Add secret chat rooms",
       "reqIds": [],
       "status": "pending"
     },
     {
       "id": "AR-2",
-      "summary": "Set/confirm app name as “Ask Big Sister”.",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-3",
-      "summary": "Add soothing background music to the app experience (optional calming audio).",
+      "summary": "Automatically play soft flute tunes (background music)",
       "reqIds": [],
       "status": "pending"
     }
   ],
-  "gameProjectType": "none",
   "projectName": "Ask Big Sister",
   "clarification_mode": "instant",
   "clarification_rounds": 0

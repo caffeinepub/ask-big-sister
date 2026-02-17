@@ -1,67 +1,62 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Add soothing background music playback",
+  "title": "Autoplay Soft Flute Background Music (Frontend Only)",
   "requirements": [
     {
-      "id": "REQ-7",
-      "summary": "Add a built-in soothing background music track as a static frontend asset and play it in-app via the browser Audio API.",
+      "id": "REQ-10",
+      "summary": "Add a soft flute background music track as a static public asset and switch the background music hook to use it.",
       "acceptanceCriteria": [
-        "A calming audio file is added to the frontend static assets (e.g., under frontend/public/assets/...) and is bundled/served by the app without any backend changes.",
-        "Audio playback works in modern browsers and does not rely on any external URLs or streaming services."
+        "A flute-based audio file is available under the frontend public assets (e.g., within /assets/audio/) and is referenced by the background music hook.",
+        "The background music audio track used by the app is the new soft flute tune (not the previous default track)."
       ],
       "file_operations": [
         {
-          "path": "frontend/public/assets/audio/soothing-background.mp3",
+          "path": "frontend/public/assets/audio/soft-flute-background.mp3",
           "operation": "create",
-          "description": "Add a calming, royalty-free background music track as a static asset served by the frontend build."
+          "description": "Add the new soft flute background music MP3 as a static public asset for the app."
         },
         {
           "path": "frontend/src/hooks/useBackgroundMusic.ts",
-          "operation": "create",
-          "description": "Implement a reusable React hook that creates/manages a single HTMLAudioElement for the static asset (frontend/public/assets/audio/soothing-background.mp3) using the browser Audio API (play/pause, volume, and safe lifecycle cleanup)."
+          "operation": "modify",
+          "description": "Update the audio source path to reference the new static asset at frontend/public/assets/audio/soft-flute-background.mp3 (replacing the previous default track)."
         }
       ]
     },
     {
-      "id": "REQ-8",
-      "summary": "Add accessible Play/Pause and volume controls in the main UI (top navigation bar) with clear English labels.",
+      "id": "REQ-11",
+      "summary": "Attempt to autoplay background music on app load and handle autoplay restrictions gracefully with a clear prompt to press Play.",
       "acceptanceCriteria": [
-        "There is a visible control to Play/Pause the background music and a volume control (slider or equivalent).",
-        "Controls are keyboard accessible and have accessible labels (e.g., aria-label).",
-        "When music is playing, the UI reflects the playing state; when paused, it reflects the paused state."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/layout/NavBar.tsx",
-          "operation": "modify",
-          "description": "Add a small 'Music' control group in the right-side nav area containing a Play/Pause button and a volume slider (e.g., input[type=range]) with clear English text/labels and appropriate aria-labels; reflect playing vs paused state in the button label and styling."
-        },
-        {
-          "path": "frontend/src/components/layout/AppLayout.tsx",
-          "operation": "modify",
-          "description": "Wire background-music state/handlers from useBackgroundMusic into NavBar via props so controls are accessible from the main app UI and remain consistent across route changes."
-        }
-      ]
-    },
-    {
-      "id": "REQ-9",
-      "summary": "Default music to off until user starts it, persist play state + volume locally, and handle browser playback restrictions gracefully.",
-      "acceptanceCriteria": [
-        "On first visit (or with no stored preference), music is not playing automatically.",
-        "After the user starts music and/or sets volume, the app remembers the settings across page reloads in the same browser (e.g., via localStorage).",
-        "If playback fails due to browser restrictions, the app does not crash and provides a non-blocking, user-friendly indication (in English) that the user may need to press Play."
+        "On initial app load, the app attempts to start background music playback without requiring the user to open the music popover first.",
+        "If the browser blocks autoplay, the app does not crash and shows an English message indicating playback was blocked and the user should press Play.",
+        "If autoplay succeeds, the music control UI reflects the playing state (e.g., playing indicator is visible)."
       ],
       "file_operations": [
         {
           "path": "frontend/src/hooks/useBackgroundMusic.ts",
           "operation": "modify",
-          "description": "Persist user preference locally (play state + volume) via localStorage; initialize with music off by default when no preference exists; wrap audio.play() calls with error handling to prevent crashes and expose a user-friendly, non-blocking error message when playback is blocked."
+          "description": "Add an initial autoplay attempt when the hook first mounts (guarded to run once) and handle blocked playback by keeping music off, capturing the error, and exposing a clear English message prompting the user to press Play; ensure the hook state updates drive the existing playing indicator when autoplay succeeds."
         },
         {
           "path": "frontend/src/components/layout/NavBar.tsx",
           "operation": "modify",
-          "description": "Display any non-blocking playback status/error text (English) near the music controls (e.g., 'Playback was blocked by your browser. Please press Play.') and ensure UI stays responsive even when playback fails."
+          "description": "Ensure the autoplay-blocked message is clearly presented to the user (in English) without requiring the popover to be opened (e.g., a small inline notice near the music control when an error exists), while keeping the existing popover message as well."
+        }
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "summary": "Persist and restore background music volume and play preference across reloads using the existing localStorage key with backward compatibility.",
+      "acceptanceCriteria": [
+        "Changing volume persists across reloads.",
+        "If the user pauses music, it remains paused after reload; if the user leaves it playing and the browser allows autoplay, it resumes after reload.",
+        "Persisted preferences use the existing localStorage key (ask-big-sister-music-prefs) and remain backward-compatible with previously stored volume-only data."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useBackgroundMusic.ts",
+          "operation": "modify",
+          "description": "Extend localStorage persistence under the existing key ask-big-sister-music-prefs to include both volume and a stored play preference; on init, read volume-only data safely (backward compatible) and determine whether to attempt autoplay based on stored play preference (defaulting to attempting autoplay when play preference was never stored). Update play/pause actions to persist the play preference accordingly."
         }
       ]
     }

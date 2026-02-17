@@ -1,71 +1,73 @@
 {
   "kind": "build_request",
-  "title": "Add soothing background music playback",
+  "title": "Autoplay Soft Flute Background Music",
   "projectName": "Ask Big Sister",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-7",
-      "text": "Add a built-in soothing background music track as a static frontend asset and play it in-app using the browser audio API (no backend involvement).",
+      "id": "REQ-10",
+      "text": "Add a soft flute background music track as a static frontend asset and configure the app to use it for background playback.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-3"
+          "recent-messages-17"
         ],
         "quotes": [
-          "Add some soothing music"
+          "Automatically play soft flute tunes"
         ]
       },
       "acceptanceCriteria": [
-        "A calming audio file is added to the frontend static assets (e.g., under frontend/public/assets/...) and is bundled/served by the app without any backend changes.",
-        "Audio playback works in modern browsers and does not rely on any external URLs or streaming services."
+        "A flute-based audio file is available under the frontend public assets (e.g., within /assets/audio/) and is referenced by the background music hook.",
+        "The background music audio track used by the app is the new soft flute tune (not the previous default track)."
       ]
     },
     {
-      "id": "REQ-8",
-      "text": "Provide user controls to start/stop the soothing music and adjust volume, accessible from the main app UI (e.g., in the top navigation bar) with clear English labels.",
+      "id": "REQ-11",
+      "text": "Automatically attempt to start playing the flute background music when the app loads, while handling browser autoplay restrictions gracefully (i.e., if playback is blocked, keep music off and present a clear, English message prompting the user to press Play).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-3"
+          "recent-messages-17"
         ],
         "quotes": [
-          "Add some soothing music"
+          "Automatically play soft flute tunes"
         ]
       },
       "acceptanceCriteria": [
-        "There is a visible control to Play/Pause the background music and a volume control (slider or equivalent).",
-        "Controls are keyboard accessible and have accessible labels (e.g., aria-label).",
-        "When music is playing, the UI reflects the playing state; when paused, it reflects the paused state."
+        "On initial app load, the app attempts to start background music playback without requiring the user to open the music popover first.",
+        "If the browser blocks autoplay, the app does not crash and shows an English message indicating playback was blocked and the user should press Play.",
+        "If autoplay succeeds, the music control UI reflects the playing state (e.g., playing indicator is visible)."
       ]
     },
     {
-      "id": "REQ-9",
-      "text": "Ensure background music respects user expectations and browser policies by defaulting to muted/off until the user explicitly starts playback, and persist the user’s preference (play state + volume) locally in the browser.",
+      "id": "REQ-12",
+      "text": "Persist the user’s background music preferences locally so that both volume and play state are restored across page reloads.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-3"
+          "recent-messages-17"
         ],
         "quotes": [
-          "Add some soothing music"
+          "Automatically play soft flute tunes"
         ]
       },
       "acceptanceCriteria": [
-        "On first visit (or with no stored preference), music is not playing automatically.",
-        "After the user starts music and/or sets volume, the app remembers the settings across page reloads in the same browser (e.g., via localStorage).",
-        "If playback fails due to browser restrictions, the app does not crash and provides a non-blocking, user-friendly indication (in English) that the user may need to press Play."
+        "Changing volume persists across reloads.",
+        "If the user pauses music, it remains paused after reload; if the user leaves it playing and the browser allows autoplay, it resumes after reload.",
+        "Persisted preferences use the existing localStorage key (ask-big-sister-music-prefs) and remain backward-compatible with previously stored volume-only data."
       ]
     }
   ],
   "constraints": [
-    "Do not modify files under frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or anything in frontend/src/components/ui (compose instead).",
-    "Keep the backend as a single Motoko actor; no backend changes are required for music playback."
+    "Do not modify files under frontend/src/components/ui (read-only shadcn components).",
+    "Do not modify immutable hook files listed in SYSTEM_CONTEXT (frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx).",
+    "Backend is not involved in music playback; keep all music logic entirely in the frontend.",
+    "Autoplay behavior must respect browser policies by handling blocked playback without breaking the app."
   ],
   "nonGoals": [
-    "Do not add any third-party audio streaming/integrations (e.g., Spotify, YouTube).",
-    "Do not implement real-time shared listening or sync between users/sessions.",
-    "Do not store music playback preferences in the backend user profile."
+    "Add secret chat rooms.",
+    "Add real-time chat or WebSocket-based features.",
+    "Implement server-side storage of music preferences."
   ],
   "imageRequirements": {
     "required": [],

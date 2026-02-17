@@ -4,7 +4,7 @@
   "frontend/src/App.tsx": "Main application component with hash-based routing, authentication gate, profile setup flow, and page rendering logic for Home, Ask, About, and Question Detail.",
   "frontend/src/hooks/useQueries.ts": "React Query hooks for all backend operations including user profiles, questions, answers, guidance text, and role-based access control with proper loading states.",
   "frontend/src/components/layout/AppLayout.tsx": "Shared layout wrapper with navigation bar, footer including caffeine.ai attribution with UTM tracking, and background music state management wired to NavBar controls.",
-  "frontend/src/components/layout/NavBar.tsx": "Responsive navigation header with logo, route links (Home, Ask, About), active state indication, login button, and new music controls popover with play/pause button and volume slider.",
+  "frontend/src/components/layout/NavBar.tsx": "Responsive navigation header with logo, route links, login button, music controls popover with play/pause and volume slider, and inline autoplay-blocked error message displayed prominently on both desktop and mobile when browser blocks playback.",
   "frontend/src/components/auth/LoginButton.tsx": "Authentication button component handling login/logout with Internet Identity, loading states, and React Query cache clearing on logout.",
   "frontend/src/components/auth/ProfileSetupDialog.tsx": "Modal dialog for first-time user profile setup requesting display name with proper loading state handling to prevent modal flash.",
   "frontend/src/pages/LoginPage.tsx": "Landing page for unauthenticated users with app branding, feature highlights, and Internet Identity login flow.",
@@ -13,5 +13,6 @@
   "frontend/src/pages/AboutPage.tsx": "Information page explaining Ask Big Sister's purpose, features, how it works, and critical disclaimer about not being a substitute for professional help.",
   "frontend/src/pages/QuestionDetailPage.tsx": "Individual question view showing full question text, metadata, answer (if available), and moderator-only answer form for admins.",
   "frontend/src/components/moderation/AddAnswerForm.tsx": "Admin-only form for submitting compassionate answers to questions with empathetic writing guidance and character validation.",
-  "frontend/src/hooks/useBackgroundMusic.ts": "Custom React hook that manages background music playback using the browser Audio API with localStorage persistence for volume preferences, error handling for browser playback restrictions, and play/pause/volume controls."
+  "frontend/src/hooks/useBackgroundMusic.ts": "Custom React hook managing background music playback with soft flute audio, automatic autoplay attempt on mount with browser restriction handling, localStorage persistence for both volume and play preferences with backward compatibility, and comprehensive error state management.",
+  "frontend/public/assets/audio/soft-flute-background.mp3": "Soft flute background music audio file (placeholder - requires actual royalty-free flute music track to be placed at this path)."
 }

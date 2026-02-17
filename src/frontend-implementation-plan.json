@@ -1,0 +1,208 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Ask Big Sister — Empathetic Q&A Advice App (Frontend)",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Implement authenticated core UX to ask questions, view recent questions, and view question details with answers.",
+      "acceptanceCriteria": [
+        "Users can sign in with Internet Identity and access the app.",
+        "Users can submit a new question with a title and details.",
+        "Submitted questions are persisted in the backend and can be listed in the UI.",
+        "Each question has a dedicated detail view where answers are shown."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the main app shell with an authentication gate (Internet Identity) before showing any question/answer data; wire basic hash-based routing for Home, Ask, About, and Question Detail; include a shared layout (header + content) and ensure logout clears cached data via React Query per the authorization component guidance. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/LoginButton.tsx",
+          "operation": "create",
+          "description": "Create a login/logout button using useInternetIdentity that follows the authorization component guidance (handles already-authenticated edge case and clears React Query cache on logout). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/ProfileSetupDialog.tsx",
+          "operation": "create",
+          "description": "Create a profile setup dialog that asks for a friendly display name on first login using getCallerUserProfile/saveCallerUserProfile; prevent modal flash by applying the authorization component’s loading/isFetched pattern with useActor + React Query. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useQuestions.ts",
+          "operation": "create",
+          "description": "Add React Query hooks to fetch question lists and a single question (getAllQuestions/getQuestion) and to submit a question (askQuestion), including basic loading/error states and cache invalidation."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "create",
+          "description": "Create Home (recent questions) page that loads recent questions for authenticated users, renders a preview list, and links each item to its dedicated detail view."
+        },
+        {
+          "path": "frontend/src/pages/QuestionDetailPage.tsx",
+          "operation": "create",
+          "description": "Create question detail page that fetches a question by id, shows the question content and metadata (respecting anonymity), and renders any existing answer(s) visible to the user."
+        },
+        {
+          "path": "frontend/src/pages/AskPage.tsx",
+          "operation": "create",
+          "description": "Create Ask (submit question) page with inputs for title + details (combined into backend 'text' payload in a consistent format) and submit handling; after submit, navigate to the new question’s detail view."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Add moderator-only answering UI that allows designated Big Sister moderators to post empathetic answers on questions.",
+      "acceptanceCriteria": [
+        "Backend supports creating and storing one or more answers per question, including author principal and timestamp.",
+        "Frontend provides an 'Add answer' form that is only visible to moderators.",
+        "Non-moderator users cannot submit answers (enforced by backend authorization)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useModeration.ts",
+          "operation": "create",
+          "description": "Add React Query hooks to fetch the caller role (getCallerUserRole/isCallerAdmin) and to submit an answer (answerQuestion), handling authorization errors gracefully (show a friendly message rather than crashing). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/moderation/AddAnswerForm.tsx",
+          "operation": "create",
+          "description": "Create an 'Add answer' form component that is only rendered when the current user is a moderator/admin (per role from backend) and submits via answerQuestion; include empathetic writing prompt text for moderators."
+        },
+        {
+          "path": "frontend/src/pages/QuestionDetailPage.tsx",
+          "operation": "modify",
+          "description": "Wire moderator role detection and render AddAnswerForm only for moderators/admins; on successful answer submission, refresh the question detail view so the new answer appears."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Display answered/unanswered status in the recent questions list using the question’s isAnswered flag."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Add sensitive-app safety and privacy UX: supportive guidance text and optional anonymous posting with UI anonymity respect.",
+      "acceptanceCriteria": [
+        "Question submission includes an option like 'Post anonymously' that, when enabled, does not display the author identity in the UI.",
+        "The app displays clear supportive copy (in English) encouraging kindness and clarifying that the app is not a substitute for professional help.",
+        "The backend still stores the author principal for moderation/audit, but the UI respects anonymity settings."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useGuidance.ts",
+          "operation": "create",
+          "description": "Add a React Query hook to load guidance text from the backend (getGuidanceText) with a safe English fallback if unavailable."
+        },
+        {
+          "path": "frontend/src/pages/AskPage.tsx",
+          "operation": "modify",
+          "description": "Add a 'Post anonymously' toggle that maps to askQuestion(..., isAnonymous); display supportive guidance copy above the form (from useGuidance) and include a clear non-professional-help disclaimer in English."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Show supportive guidance copy in the Home experience (from useGuidance) and ensure question list does not reveal author identity when isAnonymous is true."
+        },
+        {
+          "path": "frontend/src/pages/QuestionDetailPage.tsx",
+          "operation": "modify",
+          "description": "Ensure author identity is not displayed for anonymous questions; if non-anonymous and a user profile is available, display a friendly name rather than a principal id (per authorization component guidance). Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Create and apply a cohesive warm, compassionate visual theme (no blue/purple primary) across all screens.",
+      "acceptanceCriteria": [
+        "UI uses a warm, supportive palette (e.g., cream/peach/coral/earth tones) and calm typography with consistent spacing.",
+        "All primary screens (question list, question detail, submit question, sign-in area) share the same design system (buttons, cards, headings)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Create global Tailwind/CSS variables and base styles establishing a warm palette (cream/peach/coral/earth tones) and calm typography; ensure primary color tokens are not blue/purple and apply consistent spacing defaults."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Adjust theme extension as needed to support the warm design system (e.g., ensure primary/secondary token usage aligns with the new CSS variable palette) while keeping existing Tailwind structure intact."
+        },
+        {
+          "path": "frontend/src/components/layout/AppLayout.tsx",
+          "operation": "create",
+          "description": "Create a shared layout component (header, navigation, content container) that applies consistent card/button/heading styling using existing shadcn-ui components by composition (do not modify immutable ui components). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wrap all routed screens with AppLayout and ensure consistent styling across Home, Ask, About, and Question Detail; ensure the sign-in area shares the same design system."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Add navigation and information architecture with Home, Ask, and About sections.",
+      "acceptanceCriteria": [
+        "Users can navigate between Home, Ask, and About.",
+        "Home shows a list of recent questions with preview text and status (e.g., answered/unanswered).",
+        "About page content is in English and aligns with the supportive 'big sister' positioning."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/AboutPage.tsx",
+          "operation": "create",
+          "description": "Create an About page with English copy describing Ask Big Sister’s purpose, kindness expectations, privacy/anonymity explanation, and a clear disclaimer that it is not a substitute for professional help."
+        },
+        {
+          "path": "frontend/src/components/layout/NavBar.tsx",
+          "operation": "create",
+          "description": "Create a navigation component with links to Home, Ask, and About; visually indicate active route; integrate LoginButton in the header area."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire Home, Ask, and About routes into the router and render the correct page components; ensure Home/Ask/Question Detail are behind the authenticated gate (no application data visible before login), while About can remain accessible without showing private data."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Ensure Home list shows preview text and answered/unanswered status consistently, and links navigate to the question detail view."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Add generated static logo and hero illustration assets and render them in the UI from frontend public assets.",
+      "acceptanceCriteria": [
+        "Generated images are placed under frontend/public/assets/generated and are referenced directly by the frontend (not served through the backend).",
+        "The app header includes the logo and the landing/home area includes the hero illustration.",
+        "Images visually match the chosen warm, compassionate theme."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/ask-big-sister-logo.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated warm, friendly logo asset at the exact path frontend/public/assets/generated/ask-big-sister-logo.dim_512x512.png."
+        },
+        {
+          "path": "frontend/public/assets/generated/ask-big-sister-hero.dim_1600x900.png",
+          "operation": "create",
+          "description": "Add the generated gentle hero illustration asset at the exact path frontend/public/assets/generated/ask-big-sister-hero.dim_1600x900.png."
+        },
+        {
+          "path": "frontend/src/components/layout/AppLayout.tsx",
+          "operation": "modify",
+          "description": "Render the logo image from frontend/public/assets/generated/ask-big-sister-logo.dim_512x512.png in the header next to the app name, styled to match the warm theme."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Render the hero illustration from frontend/public/assets/generated/ask-big-sister-hero.dim_1600x900.png in the Home page’s top area (as a gentle landing/hero section) alongside supportive guidance copy."
+        }
+      ]
+    }
+  ]
+}

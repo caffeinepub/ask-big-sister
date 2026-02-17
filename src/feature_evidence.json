@@ -1,0 +1,135 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-the-core-app-experience-for-ask-big-sister-where-authenticated-users-can-submit-hard-to-ask-questions-and-read-compassionate-big-sister-style-answers",
+      "featureTitle": "Create the core app experience for Ask Big Sister where authenticated users can submit hard-to-ask questions and read compassionate, big-sister style answers.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/auth/LoginButton.tsx",
+        "frontend/src/components/auth/ProfileSetupDialog.tsx",
+        "frontend/src/pages/AskPage.tsx",
+        "frontend/src/pages/HomePage.tsx",
+        "frontend/src/pages/QuestionDetailPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-an-answering-workflow-so-designated-big-sister-moderators-can-post-empathetic-answers-to-user-questions-from-within-the-app",
+      "featureTitle": "Add an answering workflow so designated 'Big Sister' moderators can post empathetic answers to user questions from within the app.",
+      "files": [
+        "frontend/src/components/moderation/AddAnswerForm.tsx",
+        "frontend/src/pages/HomePage.tsx",
+        "frontend/src/pages/QuestionDetailPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-include-safety-and-privacy-ux-appropriate-for-a-sensitive-advice-app-including-guidance-text-and-an-option-to-post-questions-without-displaying-the-user-s-identity-to-other-users",
+      "featureTitle": "Include safety and privacy UX appropriate for a sensitive advice app, including guidance text and an option to post questions without displaying the user’s identity to other users.",
+      "files": [
+        "frontend/src/pages/AskPage.tsx",
+        "frontend/src/pages/HomePage.tsx",
+        "frontend/src/pages/QuestionDetailPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-design-a-cohesive-compassionate-visual-theme-for-the-app-colors-typography-layout-and-apply-it-consistently-across-all-screens-without-using-a-blue-purple-primary-palette",
+      "featureTitle": "Design a cohesive, compassionate visual theme for the app (colors, typography, layout) and apply it consistently across all screens without using a blue/purple primary palette.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/layout/AppLayout.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-basic-navigation-and-information-architecture-home-recent-questions-ask-submit-a-question-and-about-what-ask-big-sister-is",
+      "featureTitle": "Add basic navigation and information architecture: Home (recent questions), Ask (submit a question), and About (what Ask Big Sister is).",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/layout/NavBar.tsx",
+        "frontend/src/pages/AboutPage.tsx",
+        "frontend/src/pages/HomePage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-generate-and-include-custom-static-image-assets-logo-a-gentle-hero-illustration-and-render-them-in-the-ui-from-the-frontend-public-assets-folder",
+      "featureTitle": "Generate and include custom static image assets (logo + a gentle hero illustration) and render them in the UI from the frontend public assets folder.",
+      "files": [
+        "frontend/src/components/layout/AppLayout.tsx",
+        "frontend/src/pages/HomePage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

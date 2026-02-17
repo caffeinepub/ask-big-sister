@@ -1,0 +1,135 @@
+{
+  "kind": "build_request",
+  "title": "Ask Big Sister — Empathetic Q&A Advice App",
+  "projectName": "Ask Big Sister",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create the core app experience for Ask Big Sister where authenticated users can submit hard-to-ask questions and read compassionate, big-sister style answers.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "I'd like it to be for struggling woman who need someone to talk to, like asking a big sister for advice,  an app to give answers to those hard to ask questions.  I'd like it to empathy and compassion. Maybe name it ask Big Sister."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Users can sign in with Internet Identity and access the app.",
+        "Users can submit a new question with a title and details.",
+        "Submitted questions are persisted in the backend and can be listed in the UI.",
+        "Each question has a dedicated detail view where answers are shown."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Add an answering workflow so designated 'Big Sister' moderators can post empathetic answers to user questions from within the app.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "an app to give answers to those hard to ask questions"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend supports creating and storing one or more answers per question, including author principal and timestamp.",
+        "Frontend provides an 'Add answer' form that is only visible to moderators.",
+        "Non-moderator users cannot submit answers (enforced by backend authorization)."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Include safety and privacy UX appropriate for a sensitive advice app, including guidance text and an option to post questions without displaying the user’s identity to other users.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "for struggling woman who need someone to talk to",
+          "I'd like it to empathy and compassion."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Question submission includes an option like 'Post anonymously' that, when enabled, does not display the author identity in the UI.",
+        "The app displays clear supportive copy (in English) encouraging kindness and clarifying that the app is not a substitute for professional help.",
+        "The backend still stores the author principal for moderation/audit, but the UI respects anonymity settings."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Design a cohesive, compassionate visual theme for the app (colors, typography, layout) and apply it consistently across all screens without using a blue/purple primary palette.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "I'd like it to empathy and compassion."
+        ]
+      },
+      "acceptanceCriteria": [
+        "UI uses a warm, supportive palette (e.g., cream/peach/coral/earth tones) and calm typography with consistent spacing.",
+        "All primary screens (question list, question detail, submit question, sign-in area) share the same design system (buttons, cards, headings)."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Add basic navigation and information architecture: Home (recent questions), Ask (submit a question), and About (what Ask Big Sister is).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Maybe name it ask Big Sister."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Users can navigate between Home, Ask, and About.",
+        "Home shows a list of recent questions with preview text and status (e.g., answered/unanswered).",
+        "About page content is in English and aligns with the supportive 'big sister' positioning."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Generate and include custom static image assets (logo + a gentle hero illustration) and render them in the UI from the frontend public assets folder.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Maybe name it ask Big Sister."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Generated images are placed under frontend/public/assets/generated and are referenced directly by the frontend (not served through the backend).",
+        "The app header includes the logo and the landing/home area includes the hero illustration.",
+        "Images visually match the chosen warm, compassionate theme."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor (no additional backend services).",
+    "Do not modify files under frontend/src/components/ui or other immutable paths specified by the system; compose those components instead.",
+    "Use English for all user-facing text."
+  ],
+  "nonGoals": [
+    "Real-time chat or messaging.",
+    "Integration with external AI/LLM services to generate answers.",
+    "Third-party authentication providers other than Internet Identity.",
+    "Push notifications, email, or SMS outreach."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Warm, friendly logo mark with the words “Ask Big Sister” in a soft, supportive style (ask-big-sister-logo.dim_512x512.png)",
+      "Gentle hero illustration of two women in a supportive conversation, warm neutral palette, minimal background (ask-big-sister-hero.dim_1600x900.png)"
+    ],
+    "edits": []
+  }
+}

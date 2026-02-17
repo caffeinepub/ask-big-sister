@@ -1,0 +1,86 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-17T19:06:24.776Z",
+  "summary": "Core Ask Big Sister app flow (II auth gate, Home/Ask/About navigation, question list + detail, anonymous option UI, warm theme, moderator answer form) appears implemented, but some key requirements are incomplete: questions lack title/details separation, answers are limited to a single answer per question, and anonymous questions do not retain author principal for audit as required.",
+  "missing_requirements": [
+    {
+      "id": "REQ-1",
+      "requirement": "Users can submit a new question with a title and details.",
+      "reason": "The frontend and backend only handle a single `text` field for questions; no separate title+details fields are shown in the diff.",
+      "evidence": [
+        "backend/main.mo (Question has `text` only; askQuestion(text, isAnonymous))",
+        "frontend/src/pages/AskPage.tsx (single Textarea for question text)"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "Backend supports creating and storing one or more answers per question, including author principal and timestamp.",
+      "reason": "The backend data model stores only a single optional `answer` and explicitly blocks answering an already answered question, preventing multiple answers per question.",
+      "evidence": [
+        "backend/main.mo (Question has `answer : ?Answer`; `if (question.isAnswered) { trap(\"Question has already been answered\") }`)"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "The backend still stores the author principal for moderation/audit, but the UI respects anonymity settings.",
+      "reason": "When `isAnonymous` is true, the backend sets `author = null`, meaning the author principal is not stored at all.",
+      "evidence": [
+        "backend/main.mo (askQuestion: `author = if (isAnonymous) { null } else { ?caller };`)"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "User profile setup and profile storage (prompting users for a name/displayName) as a mandatory post-login step.",
+      "reason": "The BuildRequest does not request user profiles or a profile setup flow; it only requires II auth and Q&A functionality.",
+      "evidence": [
+        "backend/main.mo (UserProfile type; get/save profile methods)",
+        "frontend/src/components/auth/ProfileSetupDialog.tsx",
+        "frontend/src/App.tsx (forces ProfileSetupDialog when profile is null)"
+      ]
+    },
+    {
+      "description": "Admin-token based access-control initialization via a secret URL parameter (`caffeineAdminToken`).",
+      "reason": "The BuildRequest specifies moderator-only answering but does not request a URL-parameter secret token mechanism for admin/moderator role assignment.",
+      "evidence": [
+        "frontend/src/hooks/useActor.ts (getSecretParameter('caffeineAdminToken'); actor._initializeAccessControlWithSecret(adminToken))",
+        "frontend/src/utils/urlParams.ts"
+      ]
+    },
+    {
+      "description": "Caffeine.ai attribution footer with UTM tracking link.",
+      "reason": "Not part of requested requirements or constraints.",
+      "evidence": [
+        "frontend/src/components/layout/AppLayout.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.74,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/auth/LoginButton.tsx",
+    "frontend/src/components/auth/ProfileSetupDialog.tsx",
+    "frontend/src/components/layout/AppLayout.tsx",
+    "frontend/src/components/layout/NavBar.tsx",
+    "frontend/src/components/moderation/AddAnswerForm.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/AboutPage.tsx",
+    "frontend/src/pages/AskPage.tsx",
+    "frontend/src/pages/HomePage.tsx",
+    "frontend/src/pages/LoginPage.tsx",
+    "frontend/src/pages/QuestionDetailPage.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

@@ -1,5 +1,6 @@
 import { Heart } from 'lucide-react';
 import NavBar from './NavBar';
+import { useBackgroundMusic } from '../../hooks/useBackgroundMusic';
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -9,10 +10,29 @@ interface AppLayoutProps {
 export default function AppLayout({ children, currentRoute }: AppLayoutProps) {
   const currentYear = new Date().getFullYear();
   const appIdentifier = encodeURIComponent(window.location.hostname || 'ask-big-sister');
+  
+  const { play, pause, setVolume, isPlaying, volume, error } = useBackgroundMusic();
+
+  const handlePlayPause = () => {
+    if (isPlaying) {
+      pause();
+    } else {
+      play();
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      <NavBar currentRoute={currentRoute} />
+      <NavBar 
+        currentRoute={currentRoute}
+        musicControls={{
+          isPlaying,
+          volume,
+          error,
+          onPlayPause: handlePlayPause,
+          onVolumeChange: setVolume,
+        }}
+      />
       
       <main className="flex-1">
         {children}
@@ -39,4 +59,3 @@ export default function AppLayout({ children, currentRoute }: AppLayoutProps) {
     </div>
   );
 }
-

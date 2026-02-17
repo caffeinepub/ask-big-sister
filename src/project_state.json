@@ -1,11 +1,10 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 3,
+  "projectStateVersion": 5,
   "summary": "Build a supportive app for struggling women to ask hard questions and receive empathetic, compassionate “big sister” style advice.",
   "architectural_notes": [],
   "known_issues": [],
   "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Warm, friendly logo mark with the words “Ask Big Sister” in a soft, supportive style (ask-big-sister-logo.dim_512x512.png)\n- Gentle hero illustration of two women in a supportive conversation, warm neutral palette, minimal background (ask-big-sister-hero.dim_1600x900.png)",
   "existing_features": [
     {
       "id": "feature-create-the-core-app-experience-for-ask-big-sister-where-authenticated-users-can-submit-hard-to-ask-questions-and-read-compassionate-big-sister-style-answers",
@@ -54,6 +53,30 @@
         "REQ-6"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-add-a-built-in-soothing-background-music-track-as-a-static-frontend-asset-and-play-it-in-app-using-the-browser-audio-api-no-backend-involvement",
+      "title": "Add a built-in soothing background music track as a static frontend asset and play it in-app using the browser audio API (no backend involvement).",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-provide-user-controls-to-start-stop-the-soothing-music-and-adjust-volume-accessible-from-the-main-app-ui-e-g-in-the-top-navigation-bar-with-clear-english-labels",
+      "title": "Provide user controls to start/stop the soothing music and adjust volume, accessible from the main app UI (e.g., in the top navigation bar) with clear English labels.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-background-music-respects-user-expectations-and-browser-policies-by-defaulting-to-muted-off-until-the-user-explicitly-starts-playback-and-persist-the-user-s-preference-play-state-volume-locally-in-the-browser",
+      "title": "Ensure background music respects user expectations and browser policies by defaulting to muted/off until the user explicitly starts playback, and persist the user’s preference (play state + volume) locally in the browser.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -66,6 +89,12 @@
     {
       "id": "AR-2",
       "summary": "Set/confirm app name as “Ask Big Sister”.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Add soothing background music to the app experience (optional calming audio).",
       "reqIds": [],
       "status": "pending"
     }

@@ -1,11 +1,25 @@
-import { MessageCircle, Home, Info } from 'lucide-react';
+import { MessageCircle, Home, Info, Music, Pause, Play, Volume2 } from 'lucide-react';
 import LoginButton from '../auth/LoginButton';
+import { Button } from '@/components/ui/button';
+import { Slider } from '@/components/ui/slider';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 
 interface NavBarProps {
   currentRoute: string;
+  musicControls?: {
+    isPlaying: boolean;
+    volume: number;
+    error: string | null;
+    onPlayPause: () => void;
+    onVolumeChange: (volume: number) => void;
+  };
 }
 
-export default function NavBar({ currentRoute }: NavBarProps) {
+export default function NavBar({ currentRoute, musicControls }: NavBarProps) {
   const navItems = [
     { route: 'home', label: 'Home', icon: Home },
     { route: 'ask', label: 'Ask a Question', icon: MessageCircle },
@@ -42,7 +56,77 @@ export default function NavBar({ currentRoute }: NavBarProps) {
             ))}
           </nav>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            {musicControls && (
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="relative"
+                    aria-label="Music controls"
+                  >
+                    <Music className="w-4 h-4" />
+                    {musicControls.isPlaying && (
+                      <span className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full animate-pulse" />
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-64" align="end">
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <h4 className="font-medium text-sm">Background Music</h4>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={musicControls.onPlayPause}
+                        aria-label={musicControls.isPlaying ? 'Pause music' : 'Play music'}
+                        className="h-8 px-3"
+                      >
+                        {musicControls.isPlaying ? (
+                          <>
+                            <Pause className="w-4 h-4 mr-1.5" />
+                            Pause
+                          </>
+                        ) : (
+                          <>
+                            <Play className="w-4 h-4 mr-1.5" />
+                            Play
+                          </>
+                        )}
+                      </Button>
+                    </div>
+
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-sm">
+                        <label htmlFor="volume-slider" className="flex items-center gap-1.5 text-muted-foreground">
+                          <Volume2 className="w-4 h-4" />
+                          Volume
+                        </label>
+                        <span className="text-xs text-muted-foreground">
+                          {Math.round(musicControls.volume * 100)}%
+                        </span>
+                      </div>
+                      <Slider
+                        id="volume-slider"
+                        value={[musicControls.volume * 100]}
+                        onValueChange={(values) => musicControls.onVolumeChange(values[0] / 100)}
+                        max={100}
+                        step={1}
+                        className="w-full"
+                        aria-label="Volume control"
+                      />
+                    </div>
+
+                    {musicControls.error && (
+                      <p className="text-xs text-muted-foreground bg-muted p-2 rounded">
+                        {musicControls.error}
+                      </p>
+                    )}
+                  </div>
+                </PopoverContent>
+              </Popover>
+            )}
             <LoginButton />
           </div>
         </div>
@@ -68,4 +152,3 @@ export default function NavBar({ currentRoute }: NavBarProps) {
     </header>
   );
 }
-

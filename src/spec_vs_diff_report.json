@@ -1,86 +1,42 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-17T19:06:24.776Z",
-  "summary": "Core Ask Big Sister app flow (II auth gate, Home/Ask/About navigation, question list + detail, anonymous option UI, warm theme, moderator answer form) appears implemented, but some key requirements are incomplete: questions lack title/details separation, answers are limited to a single answer per question, and anonymous questions do not retain author principal for audit as required.",
+  "generatedAt": "2026-02-17T19:15:36.537Z",
+  "summary": "Implemented a new `useBackgroundMusic` hook and wired music controls into `AppLayout`/`NavBar` (play/pause + volume UI). However, the diff does not show an actual audio asset being added, and local persistence only covers volume (not play state). It’s also not evidenced that the playback-blocked error is surfaced to the user in the UI.",
   "missing_requirements": [
     {
-      "id": "REQ-1",
-      "requirement": "Users can submit a new question with a title and details.",
-      "reason": "The frontend and backend only handle a single `text` field for questions; no separate title+details fields are shown in the diff.",
+      "id": "REQ-7",
+      "requirement": "Add a built-in soothing background music track as a static frontend asset and play it in-app using the browser audio API (no backend involvement).",
+      "reason": "The hook references an audio file at `/assets/audio/soothing-background.mp3`, but the diff does not include adding this (or any) audio file under `frontend/public/assets/...` or equivalent static assets location, so it’s not evidenced that the built-in track was actually added/bundled.",
       "evidence": [
-        "backend/main.mo (Question has `text` only; askQuestion(text, isAnonymous))",
-        "frontend/src/pages/AskPage.tsx (single Textarea for question text)"
+        "frontend/src/hooks/useBackgroundMusic.ts"
       ]
     },
     {
-      "id": "REQ-2",
-      "requirement": "Backend supports creating and storing one or more answers per question, including author principal and timestamp.",
-      "reason": "The backend data model stores only a single optional `answer` and explicitly blocks answering an already answered question, preventing multiple answers per question.",
+      "id": "REQ-9",
+      "requirement": "Persist the user’s preference (play state + volume) locally in the browser.",
+      "reason": "Only `volume` is written to localStorage; `isPlaying` is explicitly reset to `false` on load (“Never autoplay”) and is not persisted/restored, so play state is not remembered across reloads.",
       "evidence": [
-        "backend/main.mo (Question has `answer : ?Answer`; `if (question.isAnswered) { trap(\"Question has already been answered\") }`)"
+        "frontend/src/hooks/useBackgroundMusic.ts"
       ]
     },
     {
-      "id": "REQ-3",
-      "requirement": "The backend still stores the author principal for moderation/audit, but the UI respects anonymity settings.",
-      "reason": "When `isAnonymous` is true, the backend sets `author = null`, meaning the author principal is not stored at all.",
+      "id": "REQ-9",
+      "requirement": "If playback fails due to browser restrictions, the app provides a non-blocking, user-friendly indication (in English).",
+      "reason": "An English error string is set in hook state, but the provided `NavBar.tsx` diff is truncated and does not show that `musicControls.error` is rendered to the user anywhere.",
       "evidence": [
-        "backend/main.mo (askQuestion: `author = if (isAnonymous) { null } else { ?caller };`)"
+        "frontend/src/hooks/useBackgroundMusic.ts",
+        "frontend/src/components/layout/NavBar.tsx (truncated)"
       ]
     }
   ],
-  "hallucinated_features": [
-    {
-      "description": "User profile setup and profile storage (prompting users for a name/displayName) as a mandatory post-login step.",
-      "reason": "The BuildRequest does not request user profiles or a profile setup flow; it only requires II auth and Q&A functionality.",
-      "evidence": [
-        "backend/main.mo (UserProfile type; get/save profile methods)",
-        "frontend/src/components/auth/ProfileSetupDialog.tsx",
-        "frontend/src/App.tsx (forces ProfileSetupDialog when profile is null)"
-      ]
-    },
-    {
-      "description": "Admin-token based access-control initialization via a secret URL parameter (`caffeineAdminToken`).",
-      "reason": "The BuildRequest specifies moderator-only answering but does not request a URL-parameter secret token mechanism for admin/moderator role assignment.",
-      "evidence": [
-        "frontend/src/hooks/useActor.ts (getSecretParameter('caffeineAdminToken'); actor._initializeAccessControlWithSecret(adminToken))",
-        "frontend/src/utils/urlParams.ts"
-      ]
-    },
-    {
-      "description": "Caffeine.ai attribution footer with UTM tracking link.",
-      "reason": "Not part of requested requirements or constraints.",
-      "evidence": [
-        "frontend/src/components/layout/AppLayout.tsx"
-      ]
-    }
-  ],
+  "hallucinated_features": [],
   "confidence": 0.74,
   "changed_files": [
-    "all_files_summary.json",
-    "backend/main.mo",
     "frontend-file-summaries.txt",
-    "frontend/index.css",
-    "frontend/index.html",
-    "frontend/src/App.tsx",
-    "frontend/src/components/auth/LoginButton.tsx",
-    "frontend/src/components/auth/ProfileSetupDialog.tsx",
     "frontend/src/components/layout/AppLayout.tsx",
     "frontend/src/components/layout/NavBar.tsx",
-    "frontend/src/components/moderation/AddAnswerForm.tsx",
-    "frontend/src/hooks/useActor.ts",
-    "frontend/src/hooks/useInternetIdentity.ts",
-    "frontend/src/hooks/useQueries.ts",
-    "frontend/src/index.css",
-    "frontend/src/main.tsx",
-    "frontend/src/pages/AboutPage.tsx",
-    "frontend/src/pages/AskPage.tsx",
-    "frontend/src/pages/HomePage.tsx",
-    "frontend/src/pages/LoginPage.tsx",
-    "frontend/src/pages/QuestionDetailPage.tsx",
-    "frontend/src/utils/urlParams.ts",
-    "frontend/tailwind.config.js",
+    "frontend/src/hooks/useBackgroundMusic.ts",
     "project_state.json"
   ]
 }
